@@ -1,10 +1,10 @@
 {
-    "name":  "Food Ninja",
-    "short_name": "FoodNinja",
+    "name":  "Spark Streaks",
+    "short_name": "Spark",
     "start_url": "/index.html",
     "display": "standalone",
-    "background_color": "#FFE9D2",
-    "theme_color": "#FFE1C4",
+    "background_color": "#F2EFE9",
+    "theme_color": "#FFA600",
     "orientation": "portrait-primary",
     "icons": [
         {

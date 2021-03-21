@@ -1,14 +1,13 @@
 /* colours */
 :root{
-  --primary: #FFE9D2;
-  --secondary: #FFE1C4;
-  --title: #FF8816;
+  --primary: #00A7E1;
+  --secondary: #FFA600;
+  --title: #FFA600;
 }
 
 /* layout styles */
 nav{
-  background: var(--primary);
-  border-bottom: 10px solid var(--secondary);
+  background: white;
 }
 nav a{
   text-transform: uppercase;
