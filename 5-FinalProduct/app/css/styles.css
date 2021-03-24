@@ -1,8 +1,8 @@
 /* colours */
 :root{
   --accent: #00A7E1;
-  --themelight: #FFA600;
-  --themedark: #fae8c8;
+  --themelight: rgb(244,169,60);
+  --themedark: #ED701E;
   --background: #F2EFE9;
   --dark: #1A535C;
 }
@@ -10,8 +10,6 @@
 /* layout styles */
 nav{
   background: white;
-}
-nav a{
   color: var(--themelight);
 }
 nav a span{
