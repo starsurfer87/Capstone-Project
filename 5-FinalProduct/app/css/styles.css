@@ -12,9 +12,6 @@ nav{
   background: white;
   color: var(--themelight);
 }
-nav a span{
-  font-weight: bold;
-}
 nav .sidenav-trigger{
   margin: 0;
 }
