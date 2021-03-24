@@ -12,7 +12,6 @@ nav{
   background: white;
 }
 nav a{
-  text-transform: uppercase;
   color: var(--themelight);
 }
 nav a span{
