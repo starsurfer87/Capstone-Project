@@ -18,42 +18,43 @@ nav .sidenav-trigger{
 body{
   background: var(--background);
 }
-
-/* recipe styles */
-.recipes{
-  margin-top: 20px;
+.content{
+  margin-top: 30px;
 }
-.card-panel.recipe{
+.card-panel{
   border-radius: 8px;
-  padding: 10px;
   box-shadow: 0px 1px 3px rgba(90,90,90,0.1);
+}
+
+/* title styles */
+.card-panel.title{
+  padding: 1px;
+  background-color: var(--accent);
+}
+
+/* goal card styles */
+.card-panel.main-goal{
+  padding: 10px;
   display: grid;
-  grid-template-columns: 2fr 6fr 1fr;
-  grid-template-areas: "image details delete";
+  grid-template-columns: 2fr 8fr;
+  grid-template-areas: "image details";
   position: relative;
 }
-.recipe img{
+.main-goal img{
   grid-area: image;
   max-width: 60px;
 }
 .recipe-details{
   grid-area: details;
-  margin-top: 6px;
-}
-.recipe-delete{
-  grid-area: delete;
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-}
-.recipe-delete i{
-  font-size: 18px;
 }
 .recipe-title{
   font-weight: bold;
+  font-size: 1.2em;
+  color: var(--themelight)
 }
 .recipe-ingredients{
   font-size: 0.8em;
+  color: var(--themedark)
 }
 
 /* form-styles */
