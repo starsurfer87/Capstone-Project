@@ -50,17 +50,17 @@ var renderGoal = (goal, id) => {
   let goal_end = goal.end ? goal.end.toDate() : today;  // HACK TODO
   let html;
   console.log(" ###  renderGoal:  today,goal_end,end: ", today, goal_end, goal.end);
-  if (goal_end < today) {
+  if (dayjs(goal_end).isBefore(today, 'day')) {
     console.log("this goal has ended:  " + goal.name);
 
     let longest_streak = pad(goal.longest_streak, 3);
-    //let formatted_date = moment(goal_end).format('MMMM Do YYYY');
+    let formatted_date = dayjs(goal_end).format('MMMM D, YYYY');
 
     html = `
     <div class="card-panel white row valign-wrapper">
       <div>
         <div class="goal-title">${goal.name}</div>
-        <div class="goal-details">Completed</div>
+        <div class="goal-details">Completed ${formatted_date}</div>
       </div>
       <div class="col s2 right-align">
         <div class="streak-flame-small">
@@ -97,29 +97,6 @@ var renderGoal = (goal, id) => {
       current_goals.innerHTML += html;
     }
   }
-
-  /*
-  let current_streak = pad(data.current_streak, 3);
-  
-  const html = `
-    <div class="card-panel white row valign-wrapper" data-id="${id}">
-        <div class="col s3 left-align">
-          <i class="material-icons medium" data-id="${id}">${check_box_status}</i>
-        </div>
-        <div class="col s7">
-          <div class="goal-title">${data.name}</div>
-        </div>
-        <div class="col s2 right-align">
-          <div class="streak-flame-small">
-            <img src="/img/flame.png" height="65" width="auto">
-            <p>${current_streak}</p>
-          </div>
-        </div>
-    </div>
-  `;
-
-  main_goals.innerHTML += html;
-  */
 }
 
 const pad = (input, maxLen) => {
