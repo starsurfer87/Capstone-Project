@@ -46,31 +46,45 @@
   </ul>
 
   <!-- add new goal -->
-  <form class="content container section">
-    <div class="card-panel info row white">
-      <div class="input-field">
-        <input placeholder="" id="name" type="text" class="validate">
+  <form class="content container">
+    <div class="card-panel info white">
+      <div class="input-field row">
+        <input id="name" type="text" class="validate">
         <label for="name">Name</label>
       </div>
-      <div class="input-field">
-        <input placeholder="" id="description" type="text" class="validate">
-        <label for="description">Description</label>
-      </div>
-      <div class="input-field">
-        <input placeholder="" id="reward" type="text" class="validate">
-        <label for="reward">Completion Reward (must be a number)</label>
+      <div class="input-field row">
+        <textarea id="description" class="materialize-textarea"></textarea>
+        <label for="textarea1">Description</label>
       </div>
     </div>
-    <div class="card-panel info row white">
-      <div class="card-tabs">
-        <ul class="tabs tabs-fixed-width">
-          <li class="tab"><a href="#interval1">By Number of Days</a></li>
-          <li class="tab"><a href="#interval2">On Selected Days</a></li>
-        </ul>
+    <div class="card-panel info white">
+      <div class="row">
+        <div class="col s12">
+          Repeat goal every
+          <div class="input-field inline">
+            <input id="interval_inline" type="number" class="validate">
+          </div>
+          day(s)
+        </div>
       </div>
-      <div class="card-content">
-        <div id="interval1">Number of days</div>
-        <div id="interval2">Days of the week</div>
+      <div class="row">
+        <div class="input-field col 6">
+          <input placeholder="proper formatting here" id="start" type="date" class="validate">
+          <label for="start">Start Date</label>
+        </div>
+        <div class="input-field col 6">
+          <input placeholder="proper formatting here" id="end" type="date" class="validate">
+          <label for="end">End Date</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          Completion Reward:
+          <div class="input-field inline">
+            <input id="reward_inline" type="number" class="validate">
+          </div>
+          gem(s)
+        </div>
       </div>
     </div>
     <div class="input-field center">
