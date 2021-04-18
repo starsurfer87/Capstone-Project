@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
   current_goals = document.getElementById('current-goals-id');
   console.log("### DOMContentLoaded: set current_goals=" +current_goals);
   past_goals = document.getElementById('past-goals-id');
-  renderGoal(mock_goal('mock goal one'),1);
 
   // add recipe form
   //const forms = document.querySelectorAll('.side-form');
@@ -47,10 +46,10 @@ const renderMainGoal = (goal, id) => {
 
 var renderGoal = (goal, id) => {
   let today = new Date();
-  let goal_end = goal.end ? goal.end.toDate() : today;  // HACK TODO
+  let goal_end = goal.end ? dayjs(goal.end) : dayjs(today);  // HACK TODO
   let html;
   console.log(" ###  renderGoal:  today,goal_end,end: ", today, goal_end, goal.end);
-  if (dayjs(goal_end).isBefore(today, 'day')) {
+  if (goal_end.isBefore(today, 'day')) {
     console.log("this goal has ended:  " + goal.name);
 
     let longest_streak = pad(goal.longest_streak, 3);
@@ -109,6 +108,7 @@ const pad = (input, maxLen) => {
   return output;
 }
 
+/*
 const mock_goal = (name) => {
   return {
     name: name,
@@ -118,3 +118,4 @@ const mock_goal = (name) => {
 }
 
 console.log(" ### mock_goal: ", mock_goal('second-goal'));
+*/
