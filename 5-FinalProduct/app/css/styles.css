@@ -40,6 +40,9 @@ body{
   font-weight: bold;
   color: white;
 }
+.card-panel.info{
+  padding: 20px;
+}
 
 /* title styles */
 .card-panel.title{
