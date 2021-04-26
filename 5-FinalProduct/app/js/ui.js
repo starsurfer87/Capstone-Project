@@ -119,3 +119,12 @@ const mock_goal = (name) => {
 
 console.log(" ### mock_goal: ", mock_goal('second-goal'));
 */
+
+const set_gem_amount = (amount) => {
+  var elms = document.getElementsByClassName('gems')
+  console.log("setting gem amount=" + amount +',  elements.length=' + elms.length);
+  for (var i = 0; i < elms.length; i++) {
+    console.log("setting gems #" + i);
+    elms[i].textContent = amount;  // innerHTML or textContent
+  }
+}
