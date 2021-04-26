@@ -7,12 +7,46 @@ I first came up with this idea as incentive to make myself do core exercises, an
 Spark Streaks is in the form of a progressive web app (PWA) built using HTML, CSS, and JavaScript. I used Firebase as the app’s database and hosting server. I chose to create Spark Streaks as a PWA because it seemed like the most convenient and accessible platform. PWAs work on both Apple and Android devices and do not require a device-specific language to create. Additionally, PWAs have many of the same capabilities as native apps as they can be saved to the device’s home screen and used online. There are some downsides as PWAs are still relatively new and have not been fully accepted by some platforms. However, all the main components are widely supported and the missing components were not necessary for my app.
 
 The project consisted of 5 main stages, each of which is described in more detail below.
+
 ## 1. Javascript Course
-Following Codecademy's [Learn Javascript](https://www.codecademy.com/learn/introduction-to-javascript) course
+I completed Codecademy's [Learn Javascript](https://www.codecademy.com/learn/introduction-to-javascript) course in order to gain the JavaScript knowledge needed for my app. Proof of completion is included in the section folder.
+
+Course Syllabus:
+- Introduction
+- Conditionals
+- Functions
+- Scope
+- Arrays
+- Loops
+- Iterators
+- Objects
+- Classes
+- Browser Compatibility and Transpilation
+- Promises
+- Async-Await
+- Requests
+
 ## 2. PWA Tutorial
-Following The Net Ninja's [PWA Tutortial for Beginners](https://www.youtube.com/playlist?list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7)  
+I created sample PWA by following The Net Ninja's [PWA Tutortial for Beginners](https://www.youtube.com/playlist?list=PL4cUxeGkcC9gTxqJBcDmoi5Q2pzDusSL7).  
+
+Topics included in tutorial: 
+- web app manifests
+- adding the app to the home screen
+- registering and installing service workers
+- pre-cached and dynamically cached assets for offline
+- fallback page for uncached routes
+- using Firestore and indexedDB to use offline data and background sync
+- deploying to Firebase
+- testing app
+
 View the resulting app [here](https://food-ninja-pwa-80916.web.app/)
+
 ## 3. Prototyping
+I used a software called Marvel to design a clickable prototype for my app. This prototype is essentially a series of images that can be click through and navigated as if it were an app, allowing me to design the functionalities, layout, flow of the app without coding. Prototypes are also a very useful tool for user testing.
+
 View the final prototype [here](https://marvelapp.com/prototype/g24d4h7)
+
 ## 4. User Testing
+I had 5 different users test my app prototype in order to evaluate its usability. My testing questions, results, and reflections are all included in the section folder.
+
 ## 5. Final Product
