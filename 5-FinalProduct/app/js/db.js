@@ -76,6 +76,15 @@ if (goals_container) {
                     total_completed: firebase.firestore.FieldValue.increment(1)
                 });
             }
+            if(evt.target.textContent === 'check_box') {
+                const id = evt.target.getAttribute('data-icon-id');
+                const docRef = db.collection('goals').doc(id);
+                docRef.update({
+                    checked: false,
+                    current_streak: firebase.firestore.FieldValue.increment(-1),
+                    total_completed: firebase.firestore.FieldValue.increment(-1)
+                });
+            }
         }
     });
 }
