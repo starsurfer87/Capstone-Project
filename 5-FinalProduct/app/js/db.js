@@ -75,6 +75,10 @@ if (goals_container) {
                     current_streak: firebase.firestore.FieldValue.increment(1),
                     total_completed: firebase.firestore.FieldValue.increment(1)
                 });
+                const userRef = db.collection('users').doc('user1');
+                userRef.update({
+                    gems: firebase.firestore.FieldValue.increment(10)
+                });
             }
             if(evt.target.textContent === 'check_box') {
                 const id = evt.target.getAttribute('data-icon-id');
@@ -83,6 +87,10 @@ if (goals_container) {
                     checked: false,
                     current_streak: firebase.firestore.FieldValue.increment(-1),
                     total_completed: firebase.firestore.FieldValue.increment(-1)
+                });
+                const userRef = db.collection('users').doc('user1');
+                userRef.update({
+                    gems: firebase.firestore.FieldValue.increment(-10)
                 });
             }
         }
