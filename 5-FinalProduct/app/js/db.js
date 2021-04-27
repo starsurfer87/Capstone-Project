@@ -7,6 +7,9 @@ db.collection("goals").onSnapshot((snapshot) => {
             // add the document data to the web page
             renderMainGoal(change.doc.data(), change.doc.id);
             renderGoal(change.doc.data(), change.doc.id);
+        } 
+        else if(change.type === 'modified') {
+            updateGoal(change.doc.data(), change.doc.id);
         }
     });
 });
@@ -58,30 +61,21 @@ if (form) {
     });
 }
 
-// add new goal
-// const form2 = document.getElementById('add-goal-SKIP');
-// form2.addEventListener('sumbit', evt => {
-//     console.log('submitting form');
-//     evt.preventDefault();
-//     //let total_days = form.start.value.diff(form.end.value);
-//     const goal = {
-//         name: form2.name.value,
-//         description: form2.description.value,
-//         start: form2.start.value,
-//         end: form2.end.value,
-//         reward: form2.reward.value,
-//         interval_type: 1,
-//         interval: form2.interval.value,
-//         longest_streak: 0,
-//         current_streak: 0,
-//         total: 0,
-//         total_completed: 0,
-//         checked: false
-//     };
-
-//     db.collection('goals').add(goal)
-//         .catch(err => console.log(err));
-    
-//     //form.reset();
-//     console.log('SUBMITTED');
-// })
+// interacting with goals
+goals_container = document.querySelector('.main-goals');
+if (goals_container) {
+    goals_container.addEventListener('click', evt => {
+        console.log(evt);
+        if(evt.target.tagName === 'I') {
+            if(evt.target.textContent === 'check_box_outline_blank') {
+                const id = evt.target.getAttribute('data-icon-id');
+                const docRef = db.collection('goals').doc(id);
+                docRef.update({
+                    checked: true,
+                    current_streak: firebase.firestore.FieldValue.increment(1),
+                    total_completed: firebase.firestore.FieldValue.increment(1)
+                });
+            }
+        }
+    });
+}

@@ -26,7 +26,7 @@ const renderMainGoal = (goal, id) => {
   const html = `
     <div class="card-panel white row valign-wrapper" data-id="${id}">
         <div class="col s3 left-align">
-          <i class="material-icons medium" data-id="${id}">${check_box_status}</i>
+          <i class="material-icons medium" data-icon-id="${id}">${check_box_status}</i>
         </div>
         <div class="col s7">
           <div class="goal-title">${goal.name}</div>
@@ -34,7 +34,7 @@ const renderMainGoal = (goal, id) => {
         <div class="col s2 right-align">
           <div class="streak-flame-small">
             <img src="/img/flame.png" height="65" width="auto">
-            <p>${current_streak}</p>
+            <p data-streak-id="${id}">${current_streak}</p>
           </div>
         </div>
     </div>
@@ -56,7 +56,7 @@ var renderGoal = (goal, id) => {
     let formatted_date = dayjs(goal_end).format('MMMM D, YYYY');
 
     html = `
-    <div class="card-panel white row valign-wrapper">
+    <div class="card-panel white row valign-wrapper" data-id="${id}">
       <div>
         <div class="goal-title">${goal.name}</div>
         <div class="goal-details">Completed ${formatted_date}</div>
@@ -80,7 +80,7 @@ var renderGoal = (goal, id) => {
     let current_streak = pad(goal.current_streak, 3);
     
     html = `
-    <div class="card-panel recipe white row valign-wrapper">
+    <div class="card-panel white row valign-wrapper" data-id="${id}">
         <div class="goal-title">${goal.name}</div>
         <div class="col s2 right-align">
           <div class="streak-flame-small">
@@ -98,6 +98,13 @@ var renderGoal = (goal, id) => {
   }
 }
 
+var updateGoal = (goal, id) => {
+  const checkbox = document.querySelector(`[data-icon-id=${id}]`);
+  checkbox.textContent = (goal.checked)? "check_box" : "check_box_outline_blank";  // innerHTML or textContent
+  const streak = document.querySelector(`[data-streak-id=${id}]`);
+  streak.innerHTML = pad(goal.current_streak, 3);
+}
+
 const pad = (input, maxLen) => {
   //console.log(input.toString(10), input.toString(10).length);
   let output = "";
@@ -107,18 +114,6 @@ const pad = (input, maxLen) => {
   output += input;
   return output;
 }
-
-/*
-const mock_goal = (name) => {
-  return {
-    name: name,
-    longest_streak: 42,
-    current_streak: 3
-  }
-}
-
-console.log(" ### mock_goal: ", mock_goal('second-goal'));
-*/
 
 const set_gem_amount = (amount) => {
   var elms = document.getElementsByClassName('gems')
@@ -130,7 +125,8 @@ const set_gem_amount = (amount) => {
 }
 
 const set_badge_display = (badge) => {
-
   var elms = document.getElementById(badge);
-  elms.setAttribute("class", "responsive-img badge-owned")
+  if(elms) {
+    elms.setAttribute("class", "responsive-img badge-owned")
+  }
 }
