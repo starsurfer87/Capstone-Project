@@ -64,6 +64,11 @@ body{
   color: var(--themedark)
 }
 
+/* badge styles */
+.badge-available{
+  filter: grayscale(1);
+  opacity: 0.5;
+}
 /* form-styles */
 /*input{
   box-shadow: none !important;

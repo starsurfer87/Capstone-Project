@@ -48,7 +48,7 @@ var renderGoal = (goal, id) => {
   let today = new Date();
   let goal_end = goal.end ? dayjs(goal.end) : dayjs(today);  // HACK TODO
   let html;
-  console.log(" ###  renderGoal:  today,goal_end,end: ", today, goal_end, goal.end);
+  //console.log(" ###  renderGoal:  today,goal_end,end: ", today, goal_end, goal.end);
   if (goal_end.isBefore(today, 'day')) {
     console.log("this goal has ended:  " + goal.name);
 
@@ -122,9 +122,15 @@ console.log(" ### mock_goal: ", mock_goal('second-goal'));
 
 const set_gem_amount = (amount) => {
   var elms = document.getElementsByClassName('gems')
-  console.log("setting gem amount=" + amount +',  elements.length=' + elms.length);
+  //console.log("setting gem amount=" + amount +',  elements.length=' + elms.length);
   for (var i = 0; i < elms.length; i++) {
-    console.log("setting gems #" + i);
+    //console.log("setting gems #" + i);
     elms[i].textContent = amount;  // innerHTML or textContent
   }
+}
+
+const set_badge_display = (badge) => {
+
+  var elms = document.getElementById(badge);
+  elms.setAttribute("class", "responsive-img badge-owned")
 }

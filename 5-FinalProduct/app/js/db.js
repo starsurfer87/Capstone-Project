@@ -11,16 +11,6 @@ db.collection("goals").onSnapshot((snapshot) => {
     });
 });
 
-db.collection("badges").onSnapshot((snapshot) => {
-    //console.log("### db.badges snapshot:  " + snapshot.docChanges());
-    snapshot.docChanges().forEach(change => {
-        //console.log("### db.badges changed:  " + change, change.doc.data(), change.doc.id);
-        if(change.type === 'added') {
-            // add the document data to the web page
-        }
-    });
-});
-
 db.collection("users").onSnapshot((snapshot) => {
     console.log("### db.users snapshot:  " + snapshot.docChanges());
     snapshot.docChanges().forEach(change => {
@@ -28,6 +18,10 @@ db.collection("users").onSnapshot((snapshot) => {
         if(change.type === 'added' || change.type === 'modified') {
             // add the document data to the web page
             set_gem_amount(change.doc.data().gems);
+            var badges = change.doc.data().badges_owned;
+            badges.forEach(badge => {
+                set_badge_display(badge);
+            })
         }
     });
 });
