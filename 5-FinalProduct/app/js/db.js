@@ -36,6 +36,16 @@ if (form) {
 
         evt.preventDefault();
 
+        const difference = dayjs(form.end.value).diff(form.start.value, 'day') + 1;
+        console.log(difference);
+        let total_days = Math.floor(difference / form.interval.value);
+        console.log(total_days);
+        if (difference % form.interval.value != 0) {
+            total_days += 1;
+        }
+        console.log(total_days);
+
+
         const goal = {
             name: (form.name) ? form.name.value : "Unnamed",
             description: form.description.value,
@@ -46,16 +56,17 @@ if (form) {
             interval: (form.interval) ? form.interval.value : 1,
             longest_streak: 0,
             current_streak: 0,
-            total: 0, //TODO
+            total: total_days,
             total_completed: 0,
             last_checked: dayjs().subtract(1, 'day').format('YYYY-MM-DD'),
 
         };
 
         db.collection('goals').add(goal)
+            .then(() => {
+                window.location.href = "/";
+            })
             .catch(err => console.log(err));
-
-        form.name.value = '';
 
         console.log('--  submitted form  -----------------------------------');
 
