@@ -19,28 +19,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // render goal data
 const renderMainGoal = (goal, id) => {
-  
-  let current_streak = pad(goal.current_streak, 3);
-  let check_box_status = (goal.checked == true) ? "check_box" : "check_box_outline_blank";
-  
-  const html = `
-    <div class="card-panel white row valign-wrapper" data-id="${id}">
-        <div class="col s3 left-align">
-          <i class="material-icons medium" data-icon-id="${id}">${check_box_status}</i>
-        </div>
-        <div class="col s7">
-          <div class="goal-title">${goal.name}</div>
-        </div>
-        <div class="col s2 right-align">
-          <div class="streak-flame-small">
-            <img src="/img/flame.png" height="65" width="auto">
-            <p data-streak-id="${id}">${current_streak}</p>
+  if (dayIsBetween(dayjs(), goal.start, goal.end) && isIntervalDay(goal.start, goal.interval)) {
+    let current_streak = pad(goal.current_streak, 3);
+    let check_box_status = (dayjs().isSame(dayjs(goal.last_checked), 'day')) ? "check_box" : "check_box_outline_blank";
+    
+    const html = `
+      <div class="card-panel white row valign-wrapper" data-id="${id}">
+          <div class="col s3 left-align">
+            <i class="material-icons medium" data-icon-id="${id}">${check_box_status}</i>
           </div>
-        </div>
-    </div>
-  `;
-  if ( main_goals !== null ) {
-    main_goals.innerHTML += html;
+          <div class="col s7">
+            <div class="goal-title">${goal.name}</div>
+          </div>
+          <div class="col s2 right-align">
+            <div class="streak-flame-small">
+              <img src="/img/flame.png" height="65" width="auto">
+              <p data-streak-id="${id}">${current_streak}</p>
+            </div>
+          </div>
+      </div>
+    `;
+    if ( main_goals !== null ) {
+      main_goals.innerHTML += html;
+    }
   }
 }
 
@@ -100,7 +101,7 @@ var renderGoal = (goal, id) => {
 
 var updateGoal = (goal, id) => {
   const checkbox = document.querySelector(`[data-icon-id=${id}]`);
-  checkbox.textContent = (goal.checked)? "check_box" : "check_box_outline_blank";  // innerHTML or textContent
+  checkbox.textContent = (dayjs().isSame(dayjs(goal.last_checked), 'day'))? "check_box" : "check_box_outline_blank";  // innerHTML or textContent
   const streak = document.querySelector(`[data-streak-id=${id}]`);
   streak.innerHTML = pad(goal.current_streak, 3);
 }
@@ -113,6 +114,18 @@ const pad = (input, maxLen) => {
   }
   output += input;
   return output;
+}
+
+const dayIsBetween = (day, start, end) => {
+  return (dayjs(day).isSame(start, 'day') || dayjs(day).isSame(end, 'day') || (dayjs(day).isAfter(start, 'day') && dayjs(day).isBefore(end, 'day'))) ? true : false;
+}
+
+const isIntervalDay = (start, interval) => {
+  let daysSinceStart = dayjs().diff(start, 'day');
+  console.log("$$$ today and start: " + dayjs().format('YYYY-MM-DD') + "and" + dayjs(start).format('YYYY-MM-DD'));
+  console.log("DAYS SINCE START: " + daysSinceStart);
+  console.log(daysSinceStart % interval)
+  return (daysSinceStart % interval == 0) ? true : false;
 }
 
 const set_gem_amount = (amount) => {

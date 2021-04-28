@@ -46,9 +46,10 @@ if (form) {
             interval: (form.interval) ? form.interval.value : 1,
             longest_streak: 0,
             current_streak: 0,
-            total: 0,
+            total: 0, //TODO
             total_completed: 0,
-            checked: false
+            last_checked: dayjs().subtract(1, 'day').format('YYYY-MM-DD'),
+
         };
 
         db.collection('goals').add(goal)
@@ -65,13 +66,13 @@ if (form) {
 goals_container = document.querySelector('.main-goals');
 if (goals_container) {
     goals_container.addEventListener('click', evt => {
-        console.log(evt);
+        //console.log(evt);
         if(evt.target.tagName === 'I') {
             if(evt.target.textContent === 'check_box_outline_blank') {
                 const id = evt.target.getAttribute('data-icon-id');
                 const docRef = db.collection('goals').doc(id);
                 docRef.update({
-                    checked: true,
+                    last_checked: dayjs().format('YYYY-MM-DD'),
                     current_streak: firebase.firestore.FieldValue.increment(1),
                     total_completed: firebase.firestore.FieldValue.increment(1)
                 });
@@ -84,7 +85,7 @@ if (goals_container) {
                 const id = evt.target.getAttribute('data-icon-id');
                 const docRef = db.collection('goals').doc(id);
                 docRef.update({
-                    checked: false,
+                    last_checked: dayjs().subtract(1, 'day').format('YYYY-MM-DD'),
                     current_streak: firebase.firestore.FieldValue.increment(-1),
                     total_completed: firebase.firestore.FieldValue.increment(-1)
                 });
