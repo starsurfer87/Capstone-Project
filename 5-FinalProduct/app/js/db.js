@@ -92,7 +92,7 @@ if (goals_container) {
                     gems: firebase.firestore.FieldValue.increment(10)
                 });
             }
-            if(evt.target.textContent === 'check_box') {
+            else if(evt.target.textContent === 'check_box') {
                 const id = evt.target.getAttribute('data-icon-id');
                 const docRef = db.collection('goals').doc(id);
                 docRef.update({
@@ -106,5 +106,19 @@ if (goals_container) {
                 });
             }
         }
+    });
+}
+
+// interacting with badges
+badges_container = document.querySelector('.badges');
+if (badges_container) {
+    badges_container.addEventListener('click', evt => {
+        //console.log(evt);
+        if(evt.target.tagName === 'IMG') {
+            const id = evt.target.getAttribute('id');
+            //console.log(id);
+            console.log("$$$$$$$$ BADGE MODAL: " + badge_modal);
+            badge_modal.open();
+        } 
     });
 }

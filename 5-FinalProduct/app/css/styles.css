@@ -44,6 +44,11 @@ body{
   padding: 10px;
 }
 
+.modal-full {
+  min-width: 90%;
+  color: var(--themelight);
+}
+
 /* title styles */
 .card-panel.title{
   padding: 1px;
