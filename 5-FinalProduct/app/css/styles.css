@@ -44,7 +44,7 @@ body{
   padding: 10px;
 }
 
-.modal-full {
+.modal {
   min-width: 90%;
   color: var(--themelight);
 }
@@ -74,6 +74,19 @@ body{
   filter: grayscale(1);
   opacity: 0.5;
 }
+
+.badge-details-content p{
+ margin: 0;
+}
+
+.badge-details-content h6{
+  font-weight: bold;
+ }
+
+ .badge-details-content img{
+   padding-bottom: 15pt;
+ }
+
 /* form-styles */
 /*input{
   box-shadow: none !important;

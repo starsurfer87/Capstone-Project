@@ -116,9 +116,19 @@ if (badges_container) {
         //console.log(evt);
         if(evt.target.tagName === 'IMG') {
             const id = evt.target.getAttribute('id');
-            //console.log(id);
-            console.log("$$$$$$$$ BADGE MODAL: " + badge_modal);
-            badge_modal.open();
+            var docRef = db.collection("badges").doc(id);
+
+            docRef.get().then((doc) => {
+                if (doc.exists) {
+                    console.log("Document data:", doc.data());
+                    renderBadgeDetails(doc.data());
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+            }).catch((error) => {
+                console.log("Error getting document:", error);
+            });
         } 
     });
 }
