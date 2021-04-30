@@ -1,3 +1,14 @@
+const checkStreak = (goal, id) => {
+    console.log("checking streak");
+    dateRequired = dayjs().subtract(goal.interval, 'day');
+    if (dayjs(goal.last_checked).isBefore(dateRequired, 'day')) {
+        const docRef = db.collection('goals').doc(id);
+        docRef.update({
+            current_streak: 0
+        });
+    }
+}
+
 // real-time listener
 db.collection("goals").onSnapshot((snapshot) => {
     //console.log("### db.goals snapshot:  " + snapshot.docChanges());
@@ -5,6 +16,7 @@ db.collection("goals").onSnapshot((snapshot) => {
         //console.log("### db.goals changed:  " + change, change.doc.data(), change.doc.id);
         if(change.type === 'added') {
             // add the document data to the web page
+            checkStreak(change.doc.data(), change.doc.id);
             renderMainGoal(change.doc.data(), change.doc.id);
             renderGoal(change.doc.data(), change.doc.id);
         } 
@@ -28,6 +40,8 @@ db.collection("users").onSnapshot((snapshot) => {
         }
     });
 });
+
+
 
 const form = document.querySelector('form');
 if (form) {
