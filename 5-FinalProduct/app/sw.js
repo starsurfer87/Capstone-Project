@@ -1,14 +1,17 @@
-/* const staticCacheName = 'site-static-v1';
-const dynamicCache = 'site-dynamic-v1'
+const staticCacheName = 'site-static-v8';
+const dynamicCache = 'site-dynamic-v7'
 const assets = [
     '/',
     '/index.html',
+    '/pages/new_goal.html',
     '/js/app.js',
     '/js/ui.js',
     '/js/materialize.min.js',
     '/css/styles.css',
     '/css/materialize.min.css',
-    '/img/dish.png',
+    '/img/flame.png',
+    '/img/gem.png',
+    '/img/spark-logo.png',
     'https://fonts.googleapis.com/icon?family=Material+Icons',
     'https://fonts.gstatic.com/s/materialicons/v76/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2',
     '/pages/fallback.html'
@@ -33,7 +36,7 @@ self.addEventListener('install', evt => {
     //console.log('service worker has been installed');
     evt.waitUntil(
         caches.open(staticCacheName).then(cache => {
-            console.log('caching shell assets');
+            console.log('caching shell assets: ' + assets);
             cache.addAll(assets);
         })
     );
@@ -57,23 +60,24 @@ self.addEventListener('activate', evt => {
 //fetch event
 self.addEventListener('fetch', evt => {
     //console.log('fetch event', evt);
-    /*evt.respondWith(
-        caches.match(evt.request).then(cacheRes => {
-            return cacheRes || fetch(evt.request).then(fetchRes => {
-                return caches.open(dynamicCache).then(cache => {
-                    cache.put(evt.request.url, fetchRes.clone());
-                    console.log("limiting cache size");
-                    limitCacheSize(dynamicCache, 15);
-                    return fetchRes;
-                })
-            });
-        }).catch(() => {
-            if(evt.request.url.indexOf('.html') > -1) {
-                return caches.match('/pages/fallback.html');
-            }
-            // can do this for different extentions
-            // see offline PWA strategies: https://web.dev/offline-cookbook/
-        })
-    );
+    if(evt.request.url.indexOf('firestore.googleapis.com') === -1){
+        evt.respondWith(
+            caches.match(evt.request).then(cacheRes => {
+                return cacheRes || fetch(evt.request).then(fetchRes => {
+                    return caches.open(dynamicCache).then(cache => {
+                        cache.put(evt.request.url, fetchRes.clone());
+                        console.log("limiting cache size");
+                        limitCacheSize(dynamicCache, 35);
+                        return fetchRes;
+                    })
+                });
+            }).catch(() => {
+                if(evt.request.url.indexOf('.html') > -1) {
+                    return caches.match('/pages/fallback.html');
+                }
+                // can do this for different extentions
+                // see offline PWA strategies: https://web.dev/offline-cookbook/
+            })
+        );
+    }
 });
-*/

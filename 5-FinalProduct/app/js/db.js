@@ -1,13 +1,14 @@
-const checkStreak = (goal, id) => {
-    console.log("checking streak");
-    dateRequired = dayjs().subtract(goal.interval, 'day');
-    if (dayjs(goal.last_checked).isBefore(dateRequired, 'day')) {
-        const docRef = db.collection('goals').doc(id);
-        docRef.update({
-            current_streak: 0
-        });
-    }
-}
+// offline data
+db.enablePersistence()
+    .catch(err => {
+        if(err.code == 'failed-precondition'){
+            //probably multiple tabs open at once
+            console.log('persistence failed');
+        } else if (err.code == 'unimplemented'){
+            // lack of browser support
+            console.log('persistence is not available');
+        }
+    });
 
 // real-time listener
 db.collection("goals").onSnapshot((snapshot) => {
@@ -41,7 +42,16 @@ db.collection("users").onSnapshot((snapshot) => {
     });
 });
 
-
+const checkStreak = (goal, id) => {
+    console.log("checking streak");
+    dateRequired = dayjs().subtract(goal.interval, 'day');
+    if (dayjs(goal.last_checked).isBefore(dateRequired, 'day')) {
+        const docRef = db.collection('goals').doc(id);
+        docRef.update({
+            current_streak: 0
+        });
+    }
+}
 
 const form = document.querySelector('form');
 if (form) {
