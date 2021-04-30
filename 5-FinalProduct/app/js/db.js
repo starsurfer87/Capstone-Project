@@ -77,7 +77,7 @@ if (form) {
 goals_container = document.querySelector('.main-goals');
 if (goals_container) {
     goals_container.addEventListener('click', evt => {
-        //console.log(evt);
+        console.log(evt);
         if(evt.target.tagName === 'I') {
             if(evt.target.textContent === 'check_box_outline_blank') {
                 const id = evt.target.getAttribute('data-icon-id');
@@ -107,9 +107,28 @@ if (goals_container) {
             }
         }
         else {
-            console.log("view badge details");
-            goal_modal.open();  
+            //let goal_card = evt.target.parentElement.p;
+            //console.log(goal_card);
+            //console.log("found element");
+            //console.log("view badge details");
+            //goal_modal.open();  
         }
+    });
+}
+
+const getGoalDetails = (id, goal_status) => {
+    //console.log("getting goal details");
+    var docRef = db.collection("goals").doc(id);
+    docRef.get().then((doc) => {
+        if (doc.exists) {
+            //console.log("Document data:", doc.data(), "id: ", doc.id);
+            renderGoalDetails(doc.data(), goal_status);
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
     });
 }
 

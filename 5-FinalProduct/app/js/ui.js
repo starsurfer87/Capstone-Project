@@ -1,9 +1,11 @@
 const main_goals = document.querySelector('.main-goals');
+
 let current_goals;
 let past_goals;
 let instances;
 let badge_modal;
 let goal_modal;
+let goal_modal_container;
 
 document.addEventListener('DOMContentLoaded', function() {
   console.log(dayjs().format());
@@ -14,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
   current_goals = document.getElementById('current-goals-id');
   console.log("### DOMContentLoaded: set current_goals=" +current_goals);
   past_goals = document.getElementById('past-goals-id');
+  goal_modal_container = document.querySelector('#goal-modal');
 
   var elems = document.querySelectorAll('.modal');
   if (elems) {
@@ -40,14 +43,14 @@ const renderMainGoal = (goal, id) => {
     let check_box_status = (dayjs().isSame(dayjs(goal.last_checked), 'day')) ? "check_box" : "check_box_outline_blank";
     
     const html = `
-      <div class="card-panel white row valign-wrapper" data-id="${id}">
+      <div class="card-panel goal white row valign-wrapper" data-id="${id}">
           <div class="col s3 left-align">
             <i class="material-icons medium" data-icon-id="${id}">${check_box_status}</i>
           </div>
-          <div class="col s7">
+          <div class="col s7" onclick="getGoalDetails('${id}', 'current')">
             <div class="goal-title">${goal.name}</div>
           </div>
-          <div class="col s2 right-align">
+          <div class="col s2 right-align" onclick="getGoalDetails('${id}', 'current')">
             <div class="streak-flame-small">
               <img src="/img/flame.png" height="65" width="auto">
               <p data-streak-id="${id}">${current_streak}</p>
@@ -73,7 +76,7 @@ var renderGoal = (goal, id) => {
     let formatted_date = dayjs(goal_end).format('MMMM D, YYYY');
 
     html = `
-    <div class="card-panel white row valign-wrapper" data-id="${id}">
+    <div class="card-panel goal white row valign-wrapper" data-id="${id}" onclick="getGoalDetails('${id}', 'past')">
       <div>
         <div class="goal-title">${goal.name}</div>
         <div class="goal-details">Completed ${formatted_date}</div>
@@ -97,7 +100,7 @@ var renderGoal = (goal, id) => {
     let current_streak = pad(goal.current_streak, 3);
     
     html = `
-    <div class="card-panel white row valign-wrapper" data-id="${id}">
+    <div class="card-panel goal white row valign-wrapper" data-id="${id}" onclick="getGoalDetails('${id}', 'current')">
         <div class="goal-title">${goal.name}</div>
         <div class="col s2 right-align">
           <div class="streak-flame-small">
@@ -120,6 +123,116 @@ var updateGoal = (goal, id) => {
   checkbox.textContent = (dayjs().isSame(dayjs(goal.last_checked), 'day'))? "check_box" : "check_box_outline_blank";  // innerHTML or textContent
   const streak = document.querySelector(`[data-streak-id=${id}]`);
   streak.innerHTML = pad(goal.current_streak, 3);
+}
+
+const renderGoalDetails = (goal, goal_status) => {
+  console.log("rendering goal details");
+  let longest_streak = pad(goal.longest_streak, 4);
+  let percentage = Math.round((goal.total_completed / goal.total)*100) + "%";
+  percentage = pad(percentage, 4);
+  let start_date = dayjs(goal.start).format('MMMM D, YYYY');
+  let end_date = dayjs(goal.end).format('MMMM D, YYYY');
+  let goal_html;
+  if (goal_status == 'current') {
+    let current_streak = pad(goal.current_streak, 4);
+    goal_html = `
+    <div class="modal-content">
+      <div class="row">
+        <div class="col s2">
+          <a href="#!" class="modal-close">
+            <h6 class="grey-text text-darken-1">Back</h6>
+          </a>
+        </div>
+        <div class="col s8 center-align">
+          <h5>${goal.name}</h5>
+        </div>
+        <div class="col s2"></div>
+      </div>
+      <div class="goal-details-content grey-text text-darken-1">
+        <h6>Description:</h6>
+        <p>${goal.description}</p>
+        <br>
+        <div class="row">
+          <div class="col s4 center-align goal-title">Current</div>
+          <div class="col s4 center-align goal-title">Longest</div>
+          <div class="col s4 center-align goal-title">Progress</div>
+          <div class="col s4 center-align">
+            <div class="streak-flame-large">
+              <img src="/img/flame.png" height="90" width="auto">
+              <p>${current_streak}</p>
+            </div>
+          </div>
+          <div class="col s4 center-align">
+            <div class="streak-flame-large">
+              <img src="/img/flame.png" height="90" width="auto">
+              <p>${longest_streak}</p>
+            </div>
+          </div>
+          <div class="col s4 center-align">
+            <div class="streak-flame-large">
+              <img src="/img/flame.png" height="90" width="auto">
+              <p>${percentage}</p>
+            </div>
+          </div>
+        </div>
+        <h6>Additional Information:</h6>
+        <p>Start Date: ${start_date}</p>
+        <p>End Date: ${end_date}</p>
+        <p>Repeats every ${goal.interval} day(s) </p>
+        <p>Completion Reward: ${goal.reward} gems </p>
+      </div>
+    </div>
+    `
+  } 
+  else if (goal_status == 'past') {
+    goal_html = `
+    <div class="modal-content">
+      <div class="row">
+        <div class="col s2">
+          <a href="#!" class="modal-close">
+            <h6 class="grey-text text-darken-1">Back</h6>
+          </a>
+        </div>
+        <div class="col s8 center-align">
+          <h5>${goal.name}</h5>
+        </div>
+        <div class="col s2"></div>
+      </div>
+      <div class="goal-details-content grey-text text-darken-1">
+        <h6>Description:</h6>
+        <p>${goal.description}</p>
+        <br>
+        <div class="row">
+          <div class="col s6 center-align goal-title">Longest</div>
+          <div class="col s6 center-align goal-title">Progress</div>
+          <div class="col s6 center-align">
+            <div class="streak-flame-large">
+              <img src="/img/flame.png" height="90" width="auto">
+              <p>${longest_streak}</p>
+            </div>
+          </div>
+          <div class="col s6 center-align">
+            <div class="streak-flame-large">
+              <img src="/img/flame.png" height="90" width="auto">
+              <p>${percentage}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 center-align goal-title">Goal Completed!</div>
+        <br>
+        <h6>Additional Information:</h6>
+        <p>Start Date: ${start_date}</p>
+        <p>End Date: ${end_date}</p>
+        <p>Repeats every ${goal.interval} day(s) </p>
+        <p>Completion Reward: ${goal.reward} gems </p>
+      </div>
+    </div>
+    `
+  }
+  if ( goal_modal_container !== null ) {
+    goal_modal_container.innerHTML = goal_html;
+    goal_modal.open(); 
+  }
 }
 
 const pad = (input, maxLen) => {
