@@ -96,11 +96,30 @@ if (goals_container) {
             if(evt.target.textContent === 'check_box_outline_blank') {
                 const id = evt.target.getAttribute('data-icon-id');
                 const docRef = db.collection('goals').doc(id);
-                docRef.update({
+                let new_longest_streak;
+                docRef.get().then((doc) => {
+                    if (doc.exists) {
+                        let goal = doc.data();
+                        //console.log("current:", goal.current_streak, "longest: ", goal.longest_streak);
+                        new_longest_streak = ((goal.current_streak + 1) > goal.longest_streak) ? (goal.current_streak + 1) : goal.longest_streak;
+                        //console.log(new_longest_streak);
+                    } else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+                })
+                .then(() => {
+                    //console.log(new_longest_streak);
+                    docRef.update({
                     last_checked: dayjs().format('YYYY-MM-DD'),
                     current_streak: firebase.firestore.FieldValue.increment(1),
-                    total_completed: firebase.firestore.FieldValue.increment(1)
+                    total_completed: firebase.firestore.FieldValue.increment(1),
+                    longest_streak: new_longest_streak
+                })})
+                .catch((error) => {
+                    console.log("Error getting document:", error);
                 });
+
                 const userRef = db.collection('users').doc('user1');
                 userRef.update({
                     gems: firebase.firestore.FieldValue.increment(10)
