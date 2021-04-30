@@ -47,6 +47,7 @@ body{
 .modal {
   min-width: 90%;
   color: var(--themelight);
+  background: white;
 }
 
 /* title styles */

@@ -116,12 +116,16 @@ if (badges_container) {
         //console.log(evt);
         if(evt.target.tagName === 'IMG') {
             const id = evt.target.getAttribute('id');
-            var docRef = db.collection("badges").doc(id);
+            const img_class = evt.target.getAttribute('class');
+            const owned = (img_class == 'responsive-img badge-owned')
+            //console.log(owned);
+            //console.log(img_class);
 
+            var docRef = db.collection("badges").doc(id);
             docRef.get().then((doc) => {
                 if (doc.exists) {
-                    console.log("Document data:", doc.data());
-                    renderBadgeDetails(doc.data());
+                    //console.log("Document data:", doc.data(), "id: ", doc.id);
+                    renderBadgeDetails(doc.id, doc.data(), owned);
                 } else {
                     // doc.data() will be undefined in this case
                     console.log("No such document!");
@@ -131,4 +135,44 @@ if (badges_container) {
             });
         } 
     });
+}
+
+const awardBadge = (id, price, img_source) => {
+    //console.log("award badge function activated");
+    //console.log("award badge: " + id + "price: " + price);
+    let gems;
+    var docRef = db.collection("users").doc("user1");
+    docRef.get()
+    .then((doc) => {
+        if (doc.exists) {
+            //console.log("Document data:", doc.data(), "id: ", doc.id);
+            gems = doc.data().gems;
+            console.log(gems);
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    })
+    .then(() => {
+        price = parseInt(price);
+        console.log(gems, price);
+        if (gems >= price) {
+            console.log('buying badge');
+            var docRef = db.collection("users").doc("user1");
+            docRef.update({
+                badges_owned: firebase.firestore.FieldValue.arrayUnion(`${id}`),
+                gems: firebase.firestore.FieldValue.increment(-1 * price)
+            })
+            .then(() => {
+                badge_html = `
+                <img class="responsive-img badge-owned" src="${img_source}" id="UobV7VPrAhYJ9pLXVGiY"></img>
+                `
+                document.querySelector('.badge-details-content').innerHTML = badge_html;
+            });
+        }
+    })
+    .catch((error) => {
+        console.log("Error getting document:", error);
+    });
+    
 }

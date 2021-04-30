@@ -155,31 +155,33 @@ const set_badge_display = (badge) => {
   }
 }
 
-const renderBadgeDetails = (badge_info) => {
+const renderBadgeDetails = (id, badge_info, owned) => {
   let badge_html;
-            //console.log(id);
-            
-            if (false) {
-              badge_html = `
-              <img class="responsive-img badge-available" src="/img/badges/${badge_info.collection}-${badge_info.number}.png" id="UobV7VPrAhYJ9pLXVGiY">
-              <div class="center">
-                <button class="btn-small">Buy for ${badge_info.price} gems</button>
-              </div>
-              `
-            }
-            else if (true) {
-              badge_html = `
-              <img class="responsive-img owned" src="/img/badges/${badge_info.collection}-${badge_info.number}.png" id="UobV7VPrAhYJ9pLXVGiY"></img>
-              `
-            }
-            /*
-              badge_html = `
-              <h6>Details</h6>
-              <p>Collection: ${badge_info.collection}</p>
-              <p>Awarded: date </p>
-              `
-            */
-            document.querySelector('.badge-details-content').innerHTML = badge_html;
-            console.log("$$$$$$$$ BADGE MODAL: " + badge_modal);
-            badge_modal.open();
+    let img_type = (badge_info.gif) ? 'gif' : 'png';
+    let img_src = `/img/badges/${badge_info.collection}-${badge_info.number}.${img_type}`;
+    if (owned) {
+      badge_html = `
+      <img class="responsive-img badge-owned" src="${img_src}" id="UobV7VPrAhYJ9pLXVGiY"></img>
+      `
+    }
+    else {
+      console.log("render badge: " + id);
+      badge_html = `
+      <img class="responsive-img badge-available" src="/img/badges/${badge_info.collection}-${badge_info.number}.png" id="UobV7VPrAhYJ9pLXVGiY">
+      <div class="center">
+        <button onclick="awardBadge('${id}', '${badge_info.price}', '${img_src}')" class="btn-small">Buy for ${badge_info.price} gems</button>
+      </div>
+      `
+    }
+    /*
+      badge_html = `
+      <h6>Details</h6>
+      <p>Collection: ${badge_info.collection}</p>
+      <p>Awarded: date </p>
+      `
+    */
+    document.querySelector('.badge-details-content').innerHTML = badge_html;
+    //console.log("$$$$$$$$ BADGE MODAL: " + badge_modal);
+    badge_modal.open();
 }
+
