@@ -106,6 +106,10 @@ if (goals_container) {
                 });
             }
         }
+        else {
+            console.log("view badge details");
+            goal_modal.open();  
+        }
     });
 }
 

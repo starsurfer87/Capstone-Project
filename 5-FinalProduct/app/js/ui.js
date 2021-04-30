@@ -3,6 +3,7 @@ let current_goals;
 let past_goals;
 let instances;
 let badge_modal;
+let goal_modal;
 
 document.addEventListener('DOMContentLoaded', function() {
   console.log(dayjs().format());
@@ -18,9 +19,13 @@ document.addEventListener('DOMContentLoaded', function() {
   if (elems) {
     instances = M.Modal.init(elems); 
   }
-  var elem = document.querySelector('#badge-modal');
-  if (elem) {
-    badge_modal = M.Modal.getInstance(elem);
+  var elem1 = document.querySelector('#badge-modal');
+  if (elem1) {
+    badge_modal = M.Modal.getInstance(elem1);
+  }
+  var elem2 = document.querySelector('#goal-modal');
+  if (elem2) {
+    goal_modal = M.Modal.getInstance(elem2);
   }
   
   // add recipe form
