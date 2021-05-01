@@ -12,7 +12,7 @@
 
 
 ## Reflections
-Overall, I recieved a lot of positive feedback from user testing. In general, the users were able to navigate the app and complete the given tasks with minimal trouble.  
+Overall, I received a lot of positive feedback from user testing. In general, the users were able to navigate the app and complete the given tasks with minimal trouble.  
   
 Of all the tasks, people had the most trouble with task 1. This was mainly due to confusion around the two different types of goal streaks, though most users were able to correct themselves quickly. Interestingly, one user was unable to complete task 2 while all others completed it without trouble. I think this is because the user ended up on the goal detail page, which does not have an option to check off the goal even though it shows most other goal details.  
   
