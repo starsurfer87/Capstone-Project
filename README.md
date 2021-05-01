@@ -50,3 +50,13 @@ View the final prototype [here](https://marvelapp.com/prototype/g24d4h7)
 I had 5 different users test my app prototype in order to evaluate its usability. My testing questions, results, and reflections are all included in the section folder.
 
 ## 5. Final Product
+My final product is my app in the form of a PWA built using HTML, CSS, JavaScript, and Firebase. This app can be downloaded to your home screen and used like a native app with offline capabilities. Due to limited time, I focused on the most essential functions of my app. See the prototype for my other ideas.
+
+View the app [here](https://spark-streaks.firebaseapp.com/)
+
+Notes on Using the App:  
+- Ideally, there should be a pop-up that prompts users to add the app to their home screen; however, this is not supported by all browers/devices. In this case, it can be added manually by clicking the elipsis on an android device or the share button on an apple device. 
+- In general, Android devices are more supportive of PWAs, so it is best to use app on an Android device if possible. However, all the essential features are supported on Apple as well.
+- Pages are cached for offline use through both a static and a dynimic cache. This means that the main assets will be automatically cached, but in order for other pages to be cached, they must be visted while online first.
+- There is currently one known bug with using the app offline: the new goal page does not automatically exit when the form is sumbitted. However, this can easily be sidestepped by manually exiting the form after submitting. I currently do not know how to fix this without cause more major issues, but I'm hoping to find a solution in the future.
+- For the purposes of this project, I decided not to implement authentification. As a result, all users have access to and ability to interact with all the same goals. 
